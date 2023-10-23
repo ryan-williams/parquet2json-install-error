@@ -38,26 +38,6 @@ append_to_path() {
   done
 }
 
-append_subdir_to_path() {
-  for name in "$@"; do
-    local module="$GIT_HELPERS_HOME/$name"
-    append_to_path "$module" "$module/aliases"
-
-    local gitrc="$module/.git-rc"
-    if [ -s "$gitrc" ]; then
-      source "$gitrc"
-    fi
-
-    local gitconfig="$module/.gitconfig"
-    if [ -s "$gitconfig" ]; then
-      git-add-global-file include.path "$gitconfig"
-    fi
-  done
-}
-
-# do this first, because it bootstraps the
-append_subdir_to_path config
-
 export o="origin"
 export oh="origin/HEAD"
 
