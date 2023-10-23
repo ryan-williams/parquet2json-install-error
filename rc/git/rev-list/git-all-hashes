@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-git all-commits "%h"
