@@ -1,6 +1,0 @@
-[submodule "bash"]
-	path = bash
-	url = https://github.com/ryan-williams/bash-helpers.git
-[submodule "git"]
-	path = git
-	url = https://github.com/ryan-williams/git-helpers.git
