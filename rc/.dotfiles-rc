@@ -90,22 +90,3 @@ load_helpers bash  # load this module first; it provides `prepend_to_path` above
 load_helpers path
 
 load_helpers git  # this module should stand alone / be import-able outside of this repo
-
-load_helpers which
-load_helpers brew  # which
-
-# which
-load_helpers diff file path jar
-
-if [[ "$(uname -a)" =~ ^Darwin* ]]; then
-  load_helpers osx
-fi
-
-load_helpers py  # brew, path; also make sure pyenv is first on path
-
-export gh="$REPO/git"
-export gha="$gh/aliases"
-
-export PATH="$PATH:$HOME/.cargo/bin"
-
-dedupe_path_var PATH PYTHONPATH
