@@ -1,9 +1,6 @@
 #!/bin/bash --login
 
 shopt -s expand_aliases
-. rc/.dotfiles-rc
-type xt
-echo "PATH:"
-echo $PATH | tr : '\n'
-echo
+echo "Adding git helpers repo rc/git to PATH"
+export PATH="rc/git:$PATH"
 cargo install parquet2json

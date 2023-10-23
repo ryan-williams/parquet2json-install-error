@@ -1,3 +1,0 @@
-export REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-echo "Adding git helpers repo $REPO/git to PATH"
-export PATH="$REPO/git:$PATH"
