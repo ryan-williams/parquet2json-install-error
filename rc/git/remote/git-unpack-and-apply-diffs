@@ -1,0 +1,134 @@
+#!/usr/bin/env bash
+
+# Script that `git copy-diffs` copies to and runs on a remote.
+# Makes the remote's local state identical to the local/pusher's.
+
+set -x
+
+source "$GIT_HELPERS_HOME"/config/.helpers-rc
+
+# TODO: arg-ify these
+tar="diffs.tar.gz"
+
+# This script runs remotely from within an scp'd copy with this name.
+remote_script="tmp.git-unpack-and-apply-diffs"
+
+if [ $# -eq 0 ]; then
+  cur_branch_name="master"
+else
+  cur_branch_name="$1"
+fi
+
+echo "remote: git-unpack-and-apply-diffs!"
+
+set -e
+
+mkt() {
+  mktemp 2>/dev/null || mktemp -t 'githelpers.tmp.fXX'
+}
+
+mktd() {
+  mktemp -d 2>/dev/null || mktemp -d -t 'githelpers.tmp.dXX'
+}
+
+tmpdir="$(mktd)"
+excludes_file="$(mkt)"
+finish() {
+  echo "Removing tmp dir containing $(find "$tmpdir" | wc -l) files"
+  rm -rf "$tmpdir"
+  rm -f "$excludes_file"
+  git config --unset core.excludesfile
+  rm -f "$remote_script"
+}
+trap finish EXIT
+
+mv "$tar" "$tmpdir"
+pushd "$tmpdir"
+tar mxzf "$tar"
+rm -f "$tar"
+popd
+
+echo '.nfs*' > "$excludes_file"
+git config core.excludesfile "$excludes_file"
+
+# Kill any uncommitted changes laying around before switching to the branch we should be on.
+cp "$tmpdir"/.git/HEAD ./.git/
+git reset --hard HEAD
+git checkout "$cur_branch_name"
+
+echo "untracked files:"
+git ls-files --other --exclude-standard --directory
+git ls-files -z --other --exclude-standard | xargs -0 rm -rf
+echo "after:"
+git ls-files --other --exclude-standard --directory
+
+staged="$tmpdir/staged_diff_file"
+added_files="$tmpdir/added_files"
+deleted_files="$tmpdir/deleted_files"
+unstaged="$tmpdir/unstaged_diff_file"
+tar="$tmpdir/diffs.tar.gz"
+
+if [ -s "$staged" ]; then
+
+  echo '*** applying staged diff'
+
+  echo "Looking for $(wc -l "$added_files") files..."
+  for f in $(cat "$added_files"); do
+    if [ -f "$f" ]; then
+      echo -en "\tWARNING: added file already exists and is not tracked: '$f'.. "
+      if [ -n "$PROMPT_FOR_REMOVALS" ]; then
+        echo "Remove? [Y/n]"
+        read input
+        if [ -z "$input" -o "$(echo "${input:0:1}" | tr "[:lower:]" "[:upper:]")" == "Y" ]; then
+          rm -f "$f"
+        else
+          exit 1
+        fi
+      else
+        rm -f "$f" && echo "Removed."
+      fi
+    fi
+  done
+
+  git apply "$staged"
+  git add .
+
+  if [ -s "$added_files" ]; then
+    echo "Force adding files:"
+    cat "$added_files"
+    git add -f -- $(cat "$added_files")
+  fi
+
+  if [ -s "$deleted_files" ]; then
+    echo "Force removing files:"
+    cat "$deleted_files"
+    for f in "$(cat "$deleted_files")"; do
+      if [ -e "$f" ]; then
+        git rm -f -- "$f"
+      fi
+    done
+    #git rm -f -- $(cat "$deleted_files")
+  fi
+
+fi
+
+if [ -s "$unstaged" ]; then
+  echo '*** applying unstaged diff'
+  git apply "$unstaged"
+fi
+
+echo "Verifying staged diff..."
+diff "$staged" <(git diff --cached)
+rm -f "$staged" "$added_files" "$deleted_files"
+echo ''
+
+echo "Verifying unstaged diff..."
+diff "$unstaged" <(git diff)
+rm -f "$unstaged"
+echo ''
+
+echo "Copying untracked files from tmp dir ${tmpdir}..."
+cp "$tmpdir/untracked.tar.gz" ./
+tar mxzf untracked.tar.gz
+rm -f untracked.tar.gz
+echo ''

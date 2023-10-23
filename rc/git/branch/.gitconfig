@@ -1,0 +1,64 @@
+[alias]
+  b = branches
+
+  branch-back = checkout-previous-branch
+  bk = branch-back
+
+  bpa = branch --points-at
+  bpar = branch --points-at -r
+
+  previous-branch = checkout-previous-branch
+  pb = previous-branch
+
+  bm = branch -m
+  branch-move = branch -m
+  bmv = branch -m
+
+  bf = branch-reset
+  bfc = branch-reset -c
+  bc = branch-reset -c
+  brs = branch-reset
+  brh = branch-reset
+  branch-set = branch-reset
+
+  br = remote-branches
+  bu = branch-upstream
+
+  current-branch = symbolic-ref -q --short HEAD
+  cb = current-branch
+  ib = is-branch
+
+  dmb = delete-merged-branches
+  dmbr = delete-merged-branches --remote
+
+  lb = local-branches
+  lbs = local-branch-shas
+  branch-list = local-branch-shas
+  bls = local-branch-shas
+  lbl = local-branch-shas
+  nb = new-branch
+  rbb = rebase-branch
+
+  mtb = mount-branch
+
+  bd = branch -d
+  bdf = branch -D
+  bD = branch -D
+
+  upstream = rev-parse --abbrev-ref --symbolic-full-name @{u}
+  us = upstream
+
+  sb = show-branch
+
+  all-branches = for-each-ref --format='%(refname:short)'
+  ab = all-branches
+
+  be = branch-exists
+  rbe = remote-branch-exists
+  tb = tracking-branch
+  upstream-branch = tracking-branch
+  ub = upstream-branch
+  bru = branch-reset-upstream
+  bruc = branch-reset-upstream-checkout
+
+  ur = update-ref

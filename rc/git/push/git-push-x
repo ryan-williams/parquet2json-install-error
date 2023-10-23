@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ $# -gt 0 ]; then
+  IFS=, read -ra remotes <<< "$1"
+  shift
+else
+  remotes=()
+  while read -r remote; do
+    remotes+=("$remote")
+  done < <(git remote)
+fi
+
+for remote in "${remotes[@]}"; do
+  git push "$remote" "$@"
+  git push --tags "$remote" "$@"
+done

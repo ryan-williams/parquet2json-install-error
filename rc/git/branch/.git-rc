@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+alias gbd="g bd"
+alias gbD="g bD"
+alias gbdf="g bdf"
+
+alias gbf="g bf"
+alias gbfc="g bfc"
+alias gbc="g bc"
+
+alias gbpa="g bpa"
+alias gbpar="g bpar"
+
+alias gbrs="g brs"
+alias gbrh="g brh"
+
+alias gbmv="g bmv"
+
+alias gb="g b"
+alias gbu="g bu"
+alias gbr="g br"
+
+alias gcb="g cb"
+alias gib="g ib"
+
+alias gdmb="g dmb"
+alias gdmbr="g dmbr"
+
+alias gnb="g nb"
+
+alias gus="g us"
+
+alias gsb="g sb"
+
+alias glb="g lb"
+alias glbs="g lbs"
+alias gbls="g bls"
+alias glbl="g lbl"
+
+alias gmtb="g mtb"
+
+alias gab="g ab"
+alias gbk="g bk"
+alias gpb="g pb"
+
+alias gbe="g be"
+alias grbb="g rbb"
+alias grbe="g rbe"
+
+alias gtb="g tb"
+alias gub="g ub"
+alias gbru="g bru"
+alias gbruc="g bruc"
+
+alias gur="g ur"

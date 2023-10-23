@@ -1,0 +1,93 @@
+[alias]
+  l       = ls-files
+  ls      = ls-files
+  lz      = ls-files -z
+  lr      = ls-files --recurse-submodules
+  lo      = ls-files --other --exclude-standard --directory --no-empty-directory
+  lzo     = ls-files --other --exclude-standard --directory --no-empty-directory -z
+  loz     = ls-files --other --exclude-standard --directory --no-empty-directory -z
+  lso     = ls-files --other --exclude-standard --directory --no-empty-directory
+
+  lt = ls-tree
+  lth = ls-tree HEAD
+  lthr = ls-tree -r HEAD
+  lthn = ls-tree -r --name-only HEAD
+  ltr = ls-tree -r
+  ltrn = ls-tree -r --name-only
+  lts = ls-tree --abbrev
+  ltsh = ls-tree --abbrev HEAD
+
+  tree-full-id = log -n1 --format=%T
+  tfi = tree-full-id
+  tree-id = log -n1 --format=%t
+  ti = tree-id
+
+  lsh = ls-hashes
+
+  fn = find
+
+  fns = find-suffix
+  fs = find-suffix
+
+  fnp = find-prefix
+  fp = find-prefix
+
+  lsu = list-unstaged
+  lu = list-unstaged
+
+  list-added = diff --cached --name-only --diff-filter=A
+  la = diff --cached --name-only --diff-filter=A
+
+  list-changed = diff --name-only --diff-filter=M
+  lc = diff --name-only --diff-filter=M
+
+  ld = list-deleted
+
+  list-deleted-unstaged = diff --name-only --diff-filter=D
+  ldu = diff --name-only --diff-filter=D
+
+  list-deleted-staged = diff --cached --name-only --diff-filter=D
+  lds = diff --cached --name-only --diff-filter=D
+
+  list-deleted-cached = diff --cached --name-only --diff-filter=D
+  ldc = diff --cached --name-only --diff-filter=D
+
+  lc = list-changed
+
+  list-changed-unstaged = diff --name-only --diff-filter=M
+  lcu = diff --name-only --diff-filter=M
+
+  list-changed-staged = diff --name-only --cached --diff-filter=M
+  lcs = diff --name-only --cached --diff-filter=M
+
+  list-changed-cached = diff --name-only --cached --diff-filter=M
+  lcc = diff --name-only --cached --diff-filter=M
+
+  list-mode = list-status
+  lm = list-mode
+  lmm = list-mode ' M'
+
+  deleted-by-them = list-status UD
+  dbt = list-status UD
+
+  deleted-by-us = list-status DU
+  dbu = list-status DU
+
+  added-by-them = list-status UA
+  abt = list-status UA
+
+  added-by-us = list-status AU
+  abu = list-status AU
+
+  both-deleted = list-status DD
+  brm = list-status DD
+
+  list-deleted = list-status ' D'
+  ld = list-status ' D'
+
+  sz  = size
+  szh = size -H
+  szs = sizes
+  total-size = size
+  ts  = total-size
+  tsz = total-size

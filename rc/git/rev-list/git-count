@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Count commits between some `git log` arguments.
+
+git log --format='%h' $@ | wc -l

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Output the earliest "bad" commit.
+
+cat "$(git root)"/.git/refs/bisect/bad

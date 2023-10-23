@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+alias gco="g co"
+alias gcob="g cob"
+alias gcof="g cof"
+alias gcoh="g coh"
+alias gcom="g com"
+alias gcon="g con"
+alias gcop="g cop"
+alias gcor="g cor"
+alias gcorf="g corf"

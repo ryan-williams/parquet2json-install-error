@@ -1,0 +1,92 @@
+#!/usr/bin/env python
+
+"""Adds a mirrored git remote suitable for pushing to using `git copy-diffs`"""
+
+__author__ = "Ryan Williams"
+
+import os
+import sys
+
+if __name__ == '__main__':
+    file_path = os.path.realpath(__file__)
+    branches_dir = os.path.dirname(file_path)
+    root_dir = os.path.dirname(branches_dir)
+    sys.path.insert(0, root_dir)
+
+from subprocess import CalledProcessError, check_call, check_output
+from util.remotes import get_remotes, maybe_remove_remote_if_exists, prompt
+
+if len(sys.argv) < 3:
+    remote_name = os.getenv('DEFAULT_MIRROR_REMOTE_NAME')
+    remote_host = os.getenv('DEFAULT_MIRROR_REMOTE_HOST')
+    remote_dir = os.getenv('DEFAULT_MIRROR_REMOTE_DIR')
+    if not remote_name or not remote_host or not remote_dir:
+        print('Usage: git add-mirror-remote <remote_name> <remote_url>')
+        sys.exit(1)
+    root = check_output(['git', 'root']).decode().strip()
+    basename = os.path.basename(root)
+    remote_url = '%s:%s/%s' % (remote_host, remote_dir, basename)
+    print('Using default remote url: %s' % remote_url)
+else:
+    remote_name = sys.argv[1]
+    remote_url = sys.argv[2]
+
+
+if not maybe_remove_remote_if_exists(remote_name):
+    sys.exit(1)
+
+
+print(check_output(
+    ['git', 'remote', 'add', '--mirror=push', remote_name, remote_url]
+).decode())
+
+remotes = get_remotes()
+
+if remote_name not in remotes:
+    raise Exception('Failed to add remote %s' % remote_name)
+
+remote = remotes[remote_name]
+
+repo_init_commands = [
+    ['git', 'init'],
+    ['git', 'config', 'receive.denyCurrentBranch', 'false'],
+    ['git', 'config', 'receive.denyNonFastForwards', 'false'],
+    ['git', 'config', 'receive.denyDeleteCurrent', 'false'],
+    ['git', 'submodule', 'update', '--init']
+]
+
+passed_directory_existence_check = False
+try:
+    if remote.is_remote:
+        check_call(['ssh', remote.user_host_str, '[ -d %s ]' % (remote.path if remote.path else '~') ])
+    else:
+        check_call(['[ -d %s ]' % (remote.path if remote.path else '~')])
+
+    # If we get here, directory exists; prompt to continue, just in case.
+    if prompt('Directory %s exists; continue? [Y/n]: ' % remote.path):
+        passed_directory_existence_check = True
+except (CalledProcessError, OSError):
+    # Directory doesn't exist.
+    passed_directory_existence_check = True
+
+if not passed_directory_existence_check:
+    sys.exit(1)
+
+if remote.is_remote:
+    remote_cmd = ' && '.join(
+        ([ 'mkdir -p %s' % remote.path ] if remote.path else []) +
+        [ 'cd %s' % (remote.path or '~') ] +
+        list(map(' '.join, repo_init_commands))
+    )
+
+    print('Running remote cmd: %s' % remote_cmd)
+
+    check_output(['ssh', remote.user_host_str, remote_cmd])
+
+    print('Done!')
+else:
+    print('Initializing local repo at %s' % remote.path)
+    check_output(['mkdir', '-p', remote.path])
+    os.chdir(remote.path)
+    list(map(check_output, repo_init_commands))
+    print('Done!')

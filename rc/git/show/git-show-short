@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Show short version of commit(s), default to "%h" format.
+
+if [ $# -eq 0 ]; then
+  format="%h"
+else
+  format="$1"
+fi
+shift
+git show -s --format="$format" "$@"

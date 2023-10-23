@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Interactive rebase over the last <arg> commits.
+
+num="$1"
+shift
+git rebase -i HEAD~"$num" "$@"

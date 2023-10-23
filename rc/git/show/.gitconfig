@@ -1,0 +1,19 @@
+[alias]
+  eq = equal
+  sh = show
+  shf = show-sha-file
+  ssf = show-sha-file
+  shh = show-sha-file HEAD
+  shp = show-sha-file HEAD^
+  shd = show --submodule=diff
+  shl = show --submodule=log
+  shs = show --stat
+  shsl = show --submodule=log
+  shss = show --submodule=short
+  sn = show-names
+  sln = show-local-names
+  snl = show-local-names
+  snr = show-remote-names
+  srn = show-remote-names
+  shhf = show-head-file
+  chf = show-head-file
