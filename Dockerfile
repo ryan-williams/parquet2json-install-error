@@ -4,8 +4,8 @@ RUN apt-get update \
  && apt-get install -y curl gcc perl make \
  && curl https://sh.rustup.rs -sSf | bash -s -- -y
 
-ENV VERBOSE=1
-COPY run.sh run.sh
-RUN ./run.sh
-
-ENTRYPOINT [ "./run.sh" ]
+WORKDIR /root
+RUN mkdir -p a/b/c/rm
+ENV PATH="/root/a/b/c:${PATH}"
+RUN echo $PATH
+RUN cargo install parquet2json
