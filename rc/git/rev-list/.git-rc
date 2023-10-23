@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+alias gac="g ac '%h'"
+alias gah="g ah"
+alias grla="g rla"
+alias grlc="g rlc"
+alias grvl="g rvl"
+alias grlp="g rlp"
+alias grlp1="g rlp1"
+alias grlfp="g rlfp"
+alias grvp="g rvp"
+alias gpts="g pts"
+alias gprnts="g prnts"

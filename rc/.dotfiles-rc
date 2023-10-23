@@ -101,25 +101,6 @@ if [[ "$(uname -a)" =~ ^Darwin* ]]; then
   load_helpers osx
 fi
 
-load_helpers \
-	arg av aws \
-	bash \
-	"case" col color comm \
-	datetime docker \
-	emacs \
-	find \
-	go grep \
-	head-tail histogram \
-	js \
-	less line linux ls \
-	nav net num \
-	parallel perl perms postgres \
-	rsync ruby rust \
-	screen size sort ssh sql \
-	watchman whitespace \
-	xml \
-	zip
-
 load_helpers py  # brew, path; also make sure pyenv is first on path
 
 export gh="$REPO/git"

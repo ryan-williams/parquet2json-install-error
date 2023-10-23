@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+alias grmc="g rmc"
+alias grmr="g rmr"
+alias grmu="g rmu"
+alias grmut="g rmut"
+alias grmlo="g rmlo"
+alias grmlso="g rmlso"
+
+alias gud="g ud"

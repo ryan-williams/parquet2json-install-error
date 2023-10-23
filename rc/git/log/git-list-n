@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+"""Pretty, table-aligned display of recent commits.
+
+First argument can be an integer, and that number of commits will be displayed.
+"""
+
+import os
+import sys
+
+if __name__ == '__main__':
+    file_path = os.path.realpath(__file__)
+    log_dir = os.path.dirname(file_path)
+    root_dir = os.path.dirname(log_dir)
+    sys.path.insert(0, root_dir)
+
+from util.piece import Pieces
+
+if len(sys.argv) > 3:
+    raise Exception('Maximum 2 args')
+
+
+def isNum(arg):
+    try:
+        int(arg)
+        return True
+    except ValueError:
+        return False
+
+numbers = list(filter(isNum, sys.argv[1:]))
+non_numbers = list(filter(lambda arg: not isNum(arg), sys.argv[1:]))
+
+if len(numbers) > 1:
+    raise Exception('Not sure which args are numbers: %s' % str(sys.argv))
+
+number = '10'
+if len(numbers) == 1:
+    number = str(numbers[0])
+
+if len(non_numbers) > 1:
+    raise Exception('Not sure which args are refs: %s' % str(sys.argv))
+
+branch = non_numbers[0] if len(non_numbers) else 'HEAD'
+
+pieces = Pieces()
+pieces.parse_log(['-n', number, branch])
+pieces.pretty_print()

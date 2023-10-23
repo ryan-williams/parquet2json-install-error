@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Show "number of commits ahead/behind" relationship between two refs.
+
+set -e
+
+from=
+to=
+if [ $# -eq 2 ]; then
+  from="$1"
+  to="$2"
+  shift
+  shift
+elif [ $# -eq 1 ]; then
+  if [[ "$1" =~ ^[0-9a-fA-F]*\.\.[0-9a-fA-F]*$ ]]; then
+    from="${1%%..*}"
+    to="${1##*..}"
+  else
+    from=HEAD
+    to="$1"
+  fi
+  shift
+else
+  err "Usage:"
+  err -e "\t$0 <sha1>..<sha2>"
+  err -e "\t$0 <sha1> <sha2=HEAD>"
+  exit 1
+fi
+
+subtract="$(git commits-behind "$to..$from")"
+add="$(git commits-behind "$from..$to")"
+
+echo -"$subtract" +"$add"

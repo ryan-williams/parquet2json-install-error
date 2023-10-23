@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 <submodule> [parent ref [submodule ref]]" >&2
+  exit 1
+fi
+
+submodule="$1"; shift
+
+if [ $# -gt 0 ]; then
+  parent_ref="$1"; shift
+else
+  parent_ref=HEAD
+fi
+
+if [ $# -gt 0 ]; then
+  submodule_ref="$1"; shift
+else
+  submodule_ref=HEAD
+fi
+
+from="$(git submodule-sha "$parent_ref:$submodule")"
+to="$submodule_ref"
+
+cd "$submodule"
+tag=parent
+git tag "$tag" "$from"
+git graph "${from}^" "$to" "$tag"
+git tag -d "$tag" >/dev/null

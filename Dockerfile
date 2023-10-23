@@ -6,14 +6,7 @@ RUN apt-get update \
 
 ENV VERBOSE=1
 RUN apt-get install -y git
-# RUN curl -L https://j.mp/_rc | bash -s -- runsascoded/.rc
 COPY rc rc
 COPY run.sh run.sh
 
-#SHELL ["/bin/bash", "--login", "-c"]
-# SHELL [ "bash", "--rcfile", ".rc/.dotfiles-rc", "-lc" ]
-#RUN type echo
-#RUN alias xt
-
-#ENTRYPOINT [ "bash", "--rcfile", ".rc/.dotfiles-rc", "-lc", "type xt" ]
 ENTRYPOINT [ "./run.sh" ]

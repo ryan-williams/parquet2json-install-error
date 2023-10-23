@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Print the parent commits of the merge-base of the inputs.
+
+git parents "$(git merge-base-plus "$@")"

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+alias gfc="g fc"
+
+alias ggi="g gi"
+alias ggl="g gl"
+alias ggn="g gn"
+alias ggp="g gp"
+alias ggpi="g gpi"
+alias ggpl="g gpl"
+alias ggpn="g gpn"
+
+alias gkl="g kl"
+
+alias gpie="g pie"
+
+alias gcs3="g cs3"

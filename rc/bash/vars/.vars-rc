@@ -1,0 +1,119 @@
+
+alias ef="export -f"
+
+define_function() {
+  name="$1"
+  shift
+  if [ $# -eq 0 ]; then
+    echo "Usage: $0 <alias name> <aliased function> [args...]" >&2
+    return 1
+  fi
+  unalias "$name" &>/dev/null
+  eval "$name() { $@ \"\$@\"; }"
+  export -f "$name"
+}
+alias defn=define_function
+
+export_assign() {
+  local key="$1"
+  shift
+  eval "export $key=\"$@\""
+}
+defn ea export_assign
+
+append_to() {
+  local var="$1"
+  shift
+  for arg in "$@"; do
+    if [ -d "$arg" ]; then
+
+      local cur_val="$(eval "echo \$$var")"
+
+      local new_val="$arg"
+      if [ -n "$cur_val" ]; then
+        new_val="$cur_val:$arg"
+      fi
+
+      export_assign "$var" "$new_val"
+
+    else
+      debug "Not appending '$arg' to '\$$var'; '$arg' not a directory"
+    fi
+  done
+}
+
+prepend_to() {
+  local var="$1"
+  shift
+  for arg in "$@"; do
+    if [ -d "$arg" ]; then
+
+      cur_val="$(eval "echo \$$var")"
+
+      new_val="$arg"
+      if [ -n "$cur_val" ]; then
+        new_val="$arg:$cur_val"
+      fi
+
+      export_assign "$var" "$new_val"
+    else
+      debug "Not prepending '$arg' to '\$$var'; '$arg' not a directory"
+    fi
+  done
+}
+
+defn prepend_to_path prepend_to PATH
+defn ptp prepend_to_path
+
+defn append_to_path append_to PATH
+defn atp append_to_path
+
+remove_from() {
+  var="$1"
+  shift
+
+  echo "Removing from \$$var:"
+
+  for arg in "$@"; do
+    prev="$(eval "echo $(echo "\$$var")")"
+    new_val="$(echo "$prev" | splt : | grep -v "$arg")"
+
+    comm -23 <(echo "$prev" | splt : | sort | dbl) <(echo "$new_val" | sort) | indent
+    export_assign "$var" "$(echo "$new_val" | joyn :)"
+  done
+}
+
+defn remove_from_path remove_from PATH
+defn rfp remove_from_path
+
+defn remove_from_pythonpath remove_from PYTHONPATH
+defn rfpp remove_from_pythonpath
+
+# Arguments: one or more environment variable names (e.g. "PATH") that contain a ":"-delimited list of paths
+# Result: each variable's list of paths is deduped (preserving order).
+dedupe_path_var() {
+  for var in "$@"; do
+    var_contents="$(eval "echo \"\$$var\"")"
+
+    num_path_segments_before="$(echo "$var_contents" | tr : '\n' | wc -l | tr -d ' ')"
+    val="$(echo "$var_contents" | tr : '\n' | nl | sort -uk2 | sort -nk1 | cut -f2- | tr '\n' :)"
+    num_path_segments_after="$(echo "$val" | tr : '\n' | wc -l | tr -d ' ')"
+
+    if [ "$num_path_segments_before" != "$num_path_segments_after" ]; then
+      debug "Deduping \$$var variable from $num_path_segments_before segments down to $num_path_segments_after"
+      debug "\$$var before: $var_contents"
+      export_assign "$var" "$val"
+      debug "\$$var after: $(eval "echo \"\$$var\"")"
+    else
+      debug "\$$var: $num_path_segments_before unique segments, nothing de-duped"
+    fi
+  done
+}
+
+strip_file_prefixes() {
+  args=()
+  for arg in "$@"; do
+    args+=("${arg#file:}")
+  done
+}
+export -f strip_file_prefixes

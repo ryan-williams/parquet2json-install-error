@@ -1,0 +1,46 @@
+[alias]
+  r         = remote -vv
+  rv        = remote -vv
+
+  dfr       = default-remote
+  drb       = remote-default-branch
+  rdb       = remote-default-branch
+  remote-get-head = remote-default-branch
+  rgh       = remote-default-branch
+
+  gor       = get-only-remote
+
+  ra        = remote add
+  rao       = remote add origin
+  rah       = remote-add.py --https
+  ras       = remote-add.py --ssh
+  rat       = remote-add.py -i
+  rau       = remote add u
+
+  rcp       = remote-copy
+
+  re        = remote-exists
+  is-remote = remote-exists
+  ir        = is-remote
+  cd        = copy-diffs
+  lgp       = load-github-prs
+  lpr       = load-github-prs
+  lsr       = ls-remote
+  lrh       = ls-remote --heads
+  lrt       = ls-remote --tags
+  mr        = mirror-remote
+  up        = unpack-and-apply-diffs
+  amr       = add-mirror-remote
+
+  rr        = remote-rename
+  rmv       = remote-rename
+  rrm       = remote remove
+
+  rsh       = remote-set-head
+  rsha      = remote-set-head-auto
+
+  gru       = remote-get-url
+  gu        = remote-get-url
+  rgu       = remote-get-url
+  sru       = remote-set-url
+  rsu       = remote-set-url

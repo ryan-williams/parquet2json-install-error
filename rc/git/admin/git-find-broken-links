@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Print all broken symlinks in the repo.
+
+found=0
+for f in $(git links "$@"); do
+  pushd "$(dirname "$f")" > /dev/null
+  dest="$(readlink "$(basename "$f")")"
+  if [ ! -s "$dest" ]; then
+    echo "$f: $dest"
+    found=1
+  fi
+  popd > /dev/null
+done
+
+exit $found

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# `git rm` already-deleted files.
+
+git list-deleted "$@" | xargs git rm
