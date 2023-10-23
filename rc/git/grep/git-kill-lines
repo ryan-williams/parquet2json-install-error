@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-git pie "s/.*$1.*\n//"
