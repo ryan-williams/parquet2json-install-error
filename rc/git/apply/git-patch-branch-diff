@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-git apply <(git diff-branch-reflog "$@")

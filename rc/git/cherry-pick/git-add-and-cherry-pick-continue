@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-# When done resolving conflicts while cherry-picking, call `g acpc` to confirm your commit message
-# and continue.
-
-git add -u "${@:-.}" && git cherry-pick --continue --no-edit

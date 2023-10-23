@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Checkout "theirs" version of all conflicting files and continue rebasing.
-
-git conflicting-checkout-theirs && git arc $(git conflicting)

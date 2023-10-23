@@ -1,3 +1,0 @@
-[alias]
-  ci = check-ignore
-  civ = check-ignore -v

@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Print conflicting file paths.
-
-git diff --name-only --diff-filter=UU "$@"

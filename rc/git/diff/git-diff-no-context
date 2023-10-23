@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Git diff, one SHA, no context lines.
-
-git diff -U0 $1^..$1
