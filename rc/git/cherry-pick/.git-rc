@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-alias gcp="g cp"
-alias gcpa="g cpa"
-alias gcpc="g cpc"
-alias gcps="g cps"
-alias gacpc="g acpc"
-alias gcpsh="g cpsh"
-alias gshch="g shch"

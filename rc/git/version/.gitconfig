@@ -1,3 +1,0 @@
-[alias]
-  vgte = version-greater-than-or-equal-to
-  v = !git --version

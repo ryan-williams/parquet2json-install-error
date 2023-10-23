@@ -1,8 +1,0 @@
-[alias]
-  clb = clone --bare
-  cln = clone-and-cd
-  mc = my-clone
-  srv = serve
-  usi = update-server-info
-  wd = working-dir
-  working-dir = rev-parse --git-dir

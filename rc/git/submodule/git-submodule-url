@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-git submodules "$@" | parallel -k -j+0 --env PATH 'git config --file .gitmodules "submodule.{}.url"'

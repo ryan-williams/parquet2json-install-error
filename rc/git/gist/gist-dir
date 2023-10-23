@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-dir="$(dirname "${BASH_SOURCE[0]}")"
-python3 "$dir/gist_dir.py" "$@"

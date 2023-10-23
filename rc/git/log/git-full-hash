@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Print the short SHA of a ref.
-
-git --no-pager log --no-walk --format="%H" "$@"

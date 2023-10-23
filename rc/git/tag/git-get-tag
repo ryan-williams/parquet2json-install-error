@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-
-git describe --exact-match --tags "$@" 2>/dev/null

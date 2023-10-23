@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-git submodule-url "$@" | parse-github-url | perl -pe 's/(.*)/https:\/\/api.github.com\/repos\/\1/'

@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Pretty, one-line version of `git log`
-
-git log --format="%h %d (%ar) - %s" "$@"

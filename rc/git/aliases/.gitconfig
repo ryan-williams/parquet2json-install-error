@@ -1,4 +1,0 @@
-[alias]
-  gd = !git-git-dir
-  x = !git-git-dir
-  nx = !git-git-dir -n

@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-original_commit="$(git original-commit)"
-if [ -z "$original_commit" ]; then
-	exit 1
-fi
-
-git show "$original_commit"
