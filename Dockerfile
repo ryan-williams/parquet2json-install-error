@@ -8,4 +8,5 @@ WORKDIR /root
 RUN mkdir -p a/b/c/rm
 ENV PATH="/root/a/b/c:${PATH}"
 RUN echo $PATH
+RUN ls -la /root/a/b/c
 RUN cargo install parquet2json
