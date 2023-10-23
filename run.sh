@@ -1,6 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash --login
 
-set -ex
+set -x
 
-. .rc/.dotfiles-rc
+shopt -s expand_aliases
+. rc/.dotfiles-rc
+type xt
 cargo install parquet2json

@@ -10,7 +10,8 @@
 # outputting anything in those cases.
 if [[ $- != *i* ]] ; then
 	# Shell is non-interactive.  Be done now!
-	return
+	echo "WARNING: shell appears to be non-interactive" >&2
+	# return
 fi
 
 debug() {
