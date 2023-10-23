@@ -5,8 +5,6 @@ RUN apt-get update \
  && curl https://sh.rustup.rs -sSf | bash -s -- -y
 
 ENV VERBOSE=1
-RUN apt-get install -y git
-COPY rc rc
 COPY run.sh run.sh
 RUN ./run.sh
 
