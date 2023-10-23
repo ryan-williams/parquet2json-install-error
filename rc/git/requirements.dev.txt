@@ -1,5 +1,0 @@
-mock
-nose
-pylint
-python-dateutil
-requests

@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-if [ -n "$SET_LOCALE" ]; then
-  export LC_ALL="en_US.UTF-8" 2>/dev/null
-  export LANG=en_US.UTF-8
-  export LANGUAGE=en_US.UTF-8
-  export TZ=UTC
-fi
