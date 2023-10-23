@@ -46,47 +46,5 @@ try_source() {
     done
 }
 
-export MODULES="$REPO"
-load_helpers() {
-    for module in "$@"; do
-        local dir="$MODULES/$module"
-        if [ -d "$dir" ]; then
-          debug "Adding $dir to \$PATH and sourcing rc files..."
-          try_source "$dir"/.*-rc
-          prepend_to_path "$dir"
-          local ssh_config="$dir/.ssh/config"
-          if [ -s "$ssh_config" ]; then
-            local line="Include $ssh_config"
-            local ssh_dir="$HOME/.ssh"
-            if [ ! -e "$ssh_dir" ]; then
-              mkdir -p "$ssh_dir"
-            fi
-            local root_ssh_config="$ssh_dir/config"
-            if grep -q "$line" "$root_ssh_config"; then
-              debug "SSH config already Included: $ssh_config"
-            else
-              debug "Adding ssh config: $ssh_config"
-              echo "Include $ssh_config" >> "$root_ssh_config"
-            fi
-          fi
-          gitignore="$dir/global.gitignore"
-          if [ -s "$gitignore" ]; then
-            debug "Adding global git ignore file: $gitignore"
-            git add-global-ignore "$gitignore"
-          fi
-          gitconfig="$dir/.gitconfig"
-          if [ -s "$gitconfig" ]; then
-            debug "Adding global git config file: $gitconfig"
-            git-add-global-file include.path "$gitconfig"
-          fi
-        else
-          debug "Couldn't source nonexistent file: '$dir'"
-        fi
-    done
-}
-export -f load_helpers
-
-load_helpers bash  # load this module first; it provides `prepend_to_path` above!
-load_helpers path
-
-load_helpers git  # this module should stand alone / be import-able outside of this repo
+echo "Adding git helpers repo $REPO/git to PATH"
+export PATH="$REPO/git:$PATH"
