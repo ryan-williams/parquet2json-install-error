@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-alias grt='cd $(git root)'
-alias gdir='g dir'
-alias gdr='g dr'

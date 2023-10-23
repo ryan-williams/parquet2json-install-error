@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# `git add` files whose conflicts have been resolved, and continue rebasing.
-
-git add -u "${@:-.}" && git rebase --continue

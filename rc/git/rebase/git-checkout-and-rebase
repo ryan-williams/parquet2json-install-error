@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-
-while [ $# -gt 0 ]; do
-  branch="$1"; shift
-  git checkout "$branch"
-  git rebase
-done
