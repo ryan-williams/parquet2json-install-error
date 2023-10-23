@@ -58,15 +58,6 @@ append_subdir_to_path() {
 # do this first, because it bootstraps the
 append_subdir_to_path config
 
-append_subdir_to_path \
-  nav \
-  push \
-  rebase reflog remote reset rev-list rm \
-  show stash status submodule \
-  tag \
-  version \
-  watchman
-
 export o="origin"
 export oh="origin/HEAD"
 
