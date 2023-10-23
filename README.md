@@ -2,7 +2,7 @@
 
 Debugging an error installing [parquet2json] (see [#19]).
 
-[My dotfiles][runsascoded/.rc] put [a directory named `rm`][git-helpers/rm] on `$PATH`, which can lead to an error like:
+[My dotfiles][runsascoded/.rc] put [a directory named `rm`][git-helpers/rm] on `$PATH`, which can lead to an error like this (while building the [openssl-sys] dependency):
 
 ```bash
 cargo install parquet2json
@@ -21,3 +21,4 @@ Perplexingly, it even says `rm: Permission denied` when run as `root`. I guess t
 [#19]: https://github.com/jupiter/parquet2json/issues/19
 [runsascoded/.rc]: https://github.com/runsascoded/.rc
 [git-helpers/rm]: https://github.com/ryan-williams/git-helpers/tree/78ecd302c20fe0560990319fdb285662796fb29e/rm
+[openssl-sys]: https://github.com/sfackler/rust-openssl
