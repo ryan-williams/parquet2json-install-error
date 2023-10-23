@@ -5,6 +5,7 @@ RUN apt-get update \
  && curl https://sh.rustup.rs -sSf | bash -s -- -y
 
 WORKDIR /root
+# Putting a directory with basename `rm` on `$PATH` breaks `openssl-sys` build inside `cargo install parquet2json` below
 RUN mkdir -p a/b/c/rm
 ENV PATH="/root/a/b/c:${PATH}"
 RUN echo $PATH
