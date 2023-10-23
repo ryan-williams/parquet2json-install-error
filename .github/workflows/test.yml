@@ -1,16 +1,11 @@
-name: Repro
+name: Repro "cargo install parquet2json" failure
 on:
   push:
-    branches:
-      - bad
-      - main
-      - good
-  workflow_dispatch:
 jobs:
   repro:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: |
           # Putting a directory with basename `rm` on `$PATH` breaks `openssl-sys` build inside `cargo install parquet2json` below 
           dir=$PWD/a/b/c
